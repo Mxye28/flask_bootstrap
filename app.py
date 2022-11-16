@@ -17,14 +17,10 @@ class Message(db.Model):
     def __repr__(self):
         return f'<Message {self.title}>'
 
-messages = [{'title': 'Message One',
-             'content': 'Message One Content'},
-            {'title': 'Message Two',
-             'content': 'Message Two Content'}
-            ]
 
 @app.route('/')
 def index():
+    messages = Message.query.all()
     return render_template('index.html', messages = messages)
 
 @app.route('/create', methods = ('GET', 'POST'))
@@ -37,7 +33,9 @@ def create():
         elif not content:
             flash('El contenido es obligatorio')
         else:
-            messages.append({'title': title, 'content':content})
+            message = Message(title = title, content = content)
+            db.session.add(message)
+            db.session.commit()
             return redirect(url_for('index'))
     return render_template('create.html')
 
