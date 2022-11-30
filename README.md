@@ -22,8 +22,20 @@ debe ejecutar el comando `pipenv install`
 
 ## Migraciones
 Para ejecutar las migraciones el comando es el siguiente:
+
+Para ejecutar hacia adelante
 ```
 flask db upgrade
+```
+Para ejecutar hacia atras
+
+```
+flask db downgrade
+
+Cuando hacemos algun cambio en un modelo y necesitamos considerar esos datos también en la base de datos, hay que generar una nueva migración
+
+```
+`flask db migrate -m "elmensaje"
 ```
 
 En caso de modificar un modelo agregando o modificando un atribitu, debemos generar una nueva migración con el comando
@@ -38,3 +50,15 @@ Para ejecutar el servidor de desarrollo el comando es el siguiente
 ```
 flask --app app --debug run
 ```
+
+## Blueprint
+
+Los blueprint permiten componer aplicaciones desde componentes pequeños, cada componente es como una mini aplicación. Permiten crear aplicaciones grandes manteniendo el código y la estructura simples.
+
+## Módulos
+
+Para que los blueprint esten bien organizados, es mejor trabajarlos como módulos, es decir que estén dentro de una carpeta. Los módulos se pueden anidar, de hecho nosotros hicimos el `módulo app`  con su respectivo `__init__.py y dentro tenemos otros modulos como el modulo `messages` que es además un blueprint.
+
+## Tarea
+
+Crear un nuevo recurso sencillo, sin base de datos, como blueprint bajo el url      `/memes` y debe renderiar un html lleno de memes
