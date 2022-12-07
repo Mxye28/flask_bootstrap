@@ -2,7 +2,7 @@ from app.auth import bp
 from flask import render_template, request, flash, redirect, url_for
 from app.extensions import db
 from app.models.user import User
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 
 @bp.route('/')
 def index():
@@ -52,4 +52,12 @@ def login():
                     flash(f'Bienvenido {user.username}')
                 return redirect(next)
             flash('usuario o password incorrecto')        
-    return render_template('auth/login.html')  
+    
+    return render_template('auth/login.html')
+    
+@bp.route('logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Sesión cerrada')
+    return redirect('/auth/login')  
